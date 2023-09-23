@@ -3,8 +3,8 @@ ARG BUILD_FROM
 
 FROM ${BUILD_FROM}
 
-FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
-WORKDIR /app
+# FROM mcr.microsoft.com/dotnet/aspnet:7.0 AS base
+# WORKDIR /app
 
 ARG S6_OVERLAY_VERSION=3.1.5.0
 ARG TARGETARCH
@@ -39,9 +39,17 @@ RUN \
     && mkdir -p /etc/fix-attrs.d \
     && mkdir -p /etc/services.d
 
-RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
-    && chmod a+x ./dotnet-install.sh \
-    && ./dotnet-install.sh --version latest --runtime aspnetcore
+# RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
+#     && chmod a+x ./dotnet-install.sh \
+#     && ./dotnet-install.sh --version latest --runtime aspnetcore
+RUN \
+    wget https://download.visualstudio.microsoft.com/download/pr/3084cb45-cfab-41a2-8de8-cf48c06a5fad/e02b8d7443f699bd668bd64c4650ad3d/dotnet-sdk-7.0.308-linux-arm64.tar.gz \
+    \
+    && export DOTNET_ROOT=$(pwd)/.dotnet \
+    \
+    && mkdir -p "$DOTNET_ROOT" && tar zxf "dotnet-sdk-7.0.308-linux-arm64.tar.gz" -C "$DOTNET_ROOT" \
+    \
+    && export PATH=$PATH:$DOTNET_ROOT:$DOTNET_ROOT/tools
 
 # Copy root filesystem
 ADD --link rootfs /
