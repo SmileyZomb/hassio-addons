@@ -36,12 +36,16 @@ RUN \
     && mkdir -p /etc/fix-attrs.d \
     && mkdir -p /etc/services.d
 
+RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
+    && chmod +x ./dotnet-install.sh \
+    && ./dotnet-install.sh --channel 7.0
+
 # Copy root filesystem
 ADD --link rootfs /
 
 ENV CONFIG_PATH=/data/options.json
 LABEL \
-  io.hass.version="2.1.11" \
+  io.hass.version="2.2.4" \
   io.hass.type="addon" \
   io.hass.arch="aarch64|amd64"
 
