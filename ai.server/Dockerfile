@@ -38,7 +38,7 @@ RUN \
 
 RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
     && chmod a+x ./dotnet-install.sh \
-    && ./dotnet-install.sh --channel 7.0
+    && ./dotnet-install.sh --version latest --runtime aspnetcore
 
 # Copy root filesystem
 ADD --link rootfs /
