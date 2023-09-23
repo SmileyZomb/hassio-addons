@@ -37,7 +37,7 @@ RUN \
     && mkdir -p /etc/services.d
 
 RUN wget https://dot.net/v1/dotnet-install.sh -O dotnet-install.sh \
-    && chmod +x ./dotnet-install.sh \
+    && chmod a+x ./dotnet-install.sh \
     && ./dotnet-install.sh --channel 7.0
 
 # Copy root filesystem
